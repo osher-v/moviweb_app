@@ -21,8 +21,8 @@ class JSONDataManager(DataManagerInterface):
             json.dump(self.data, file, indent=4)
 
     def get_all_users(self):
-        """Return all the users."""
-        return list(self.data['users'].values())
+        """Return all the users as a dictionary."""
+        return self.data['users']
 
     def get_user_movies(self, user_id):
         """Return all the movies for a given user."""
@@ -57,3 +57,7 @@ class JSONDataManager(DataManagerInterface):
             self.save_data()
             return True
         return False
+
+    def find_user_by_id(self, user_id):
+        """Find and return a user by their ID."""
+        return self.data['users'].get(str(user_id), None)

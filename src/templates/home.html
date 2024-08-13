@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to MovieWeb App{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center" style="background-image: url('https://assets.gqindia.com/photos/5cdc08ba62fe40fb0783f40e/16:9/w_2560%2Cc_limit/top-image4.jpg'); background-size: cover; color: white;">
+    <h1 class="display-4">Welcome to MovieWeb App</h1>
+    <p class="lead">Explore your favorite movies and manage your watchlist.</p>
+    <a href="{{ url_for('list_users') }}" class="btn btn-primary btn-lg">Go to Users</a>
+</div>
+{% endblock %}
