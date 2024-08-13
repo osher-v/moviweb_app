@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
-from data_managers.json_data_manager import JSONDataManager
+from src.data_managers.json_data_manager import JSONDataManager
 
 app = Flask(__name__)
 
-# יצירת מופע של JSONDataManager עם הנתיב לקובץ JSON
 data_manager = JSONDataManager('C:/Users/osher/PycharmProjects/moviweb_app/src/data/movieweb_data.json')
 
 
