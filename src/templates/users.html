@@ -1,15 +1,30 @@
+<!-- users.html -->
+
 {% extends "base.html" %}
 
-{% block title %}Users - MovieWeb App{% endblock %}
+{% block title %}Users{% endblock %}
 
 {% block content %}
-    <h1 class="my-4">Users</h1>
-    <ul class="list-group">
-        {% for user_id, user in users.items() %}
-            <li class="list-group-item">
-                <a href="{{ url_for('user_movies', user_id=user_id) }}">{{ user['name'] }}</a>
-            </li>
+    <h1>Users</h1>
+    <div class="row">
+        {% for user in users %}
+            {% set movie_posters = user.movies|map(attribute='poster_url')|list %}
+            <div class="col-md-4">
+                <div class="card mb-4" style="background-image: url('{{ movie_posters[0] if movie_posters else "" }}'); background-size: cover; background-repeat: no-repeat;">
+                    <div class="card-body" style="background-color: rgba(0, 0, 0, 0.5); color: white;">
+                        <h5 class="card-title">{{ user.username }}</h5>
+                        {% if movie_posters %}
+                            <div class="d-flex flex-wrap">
+                                {% for poster in movie_posters[:5] %}
+                                    <img src="{{ poster }}" alt="Movie Poster" class="img-thumbnail mr-1" style="width: 50px; height: 75px;">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <a href="{{ url_for('user_movies', user_id=user.user_id) }}" class="btn btn-primary btn-sm mt-2">View Movies</a>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
-    <a href="{{ url_for('add_user') }}" class="btn btn-primary mt-4">Add New User</a>
+    </div>
+    <a href="{{ url_for('add_user') }}" class="btn btn-primary">Add User</a>
 {% endblock %}

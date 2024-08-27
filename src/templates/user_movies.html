@@ -1,17 +1,27 @@
+<!-- user_movies.html -->
+
 {% extends "base.html" %}
 
-{% block title %}{{ user['name'] }}'s Movies - MovieWeb App{% endblock %}
+{% block title %}User Movies{% endblock %}
 
 {% block content %}
-    <h1 class="my-4">{{ user['name'] }}'s Favorite Movies</h1>
-    <ul class="list-group">
-        {% for movie_id, movie in movies.items() %}
-            <li class="list-group-item">
-                <strong>{{ movie['name'] }}</strong> ({{ movie['year'] }}) - Rated: {{ movie['rating'] }}
-                <a href="{{ url_for('update_movie', user_id=user_id, movie_id=movie_id) }}" class="btn btn-warning btn-sm float-right ml-2">Edit</a>
-                <a href="{{ url_for('delete_movie', user_id=user_id, movie_id=movie_id) }}" class="btn btn-danger btn-sm float-right">Delete</a>
-            </li>
+    <h1>{{ user.username }}'s Movies</h1>
+    <div class="row">
+        {% for movie in movies %}
+            <div class="col-md-4">
+                <div class="card mb-4" style="background-image: url('{{ movie.poster_url }}'); background-size: cover; color: white;">
+                    <div class="card-body" style="background-color: rgba(0, 0, 0, 0.5);">
+                        <h5 class="card-title">{{ movie.name }}</h5>
+                        <p class="card-text">{{ movie.year }} - Rating: {{ movie.rating }}</p>
+                        <a href="{{ url_for('update_movie', user_id=user.user_id, movie_id=movie.movie_id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                        <a href="{{ url_for('delete_movie', user_id=user.user_id, movie_id=movie.movie_id) }}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
-    <a href="{{ url_for('add_movie', user_id=user_id) }}" class="btn btn-primary mt-4">Add New Movie</a>
+    </div>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('add_movie', user_id=user.user_id) }}" class="btn btn-primary">Add Movie</a>
+        <a href="{{ url_for('list_users') }}" class="btn btn-secondary">Back to Users</a>
+    </div>
 {% endblock %}
